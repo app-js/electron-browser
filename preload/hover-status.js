@@ -1,4 +1,5 @@
-var ipc = require('ipc')
+const electron = require('electron')
+var ipc = electron.ipc
 
 function setStatus (status) {
   ipc.sendToHost('status', status)

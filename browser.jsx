@@ -1,13 +1,13 @@
 'use strict'
-var remote = require('remote')
-var Menu = remote.require('menu')
-var MenuItem = remote.require('menu-item')
-var clipboard = require('clipboard')
+const electron = require('electron')
+const remote = electron.remote
+const {Menu, MenuItem} = remote
+var clipboard = electron.clipboard
 var urllib = require('url')
 
 function createPageObject (location) {
   return {
-    location: location||'https://github.com/pfraze/electron-browser',
+    location: location||'https://www.google.de',
     statusText: false,
     title: 'new tab',
     isLoading: false,
@@ -184,11 +184,11 @@ var BrowserChrome = React.createClass({
       this.getWebView().reload()
     },
     onClickBundles: function () {
-      var location = urllib.parse(this.getWebView().getUrl()).path
+      var location = urllib.parse(this.getWebView().getURL()).path
       this.getPage().navigateTo('/bundles/view.html#'+location)
     },
     onClickVersions: function () {
-      var location = urllib.parse(this.getWebView().getUrl()).path
+      var location = urllib.parse(this.getWebView().getURL()).path
       this.getPage().navigateTo('/bundles/versions.html#'+location)
     },
     onClickSync: console.log.bind(console, 'sync'),
@@ -221,7 +221,7 @@ var BrowserChrome = React.createClass({
       // update state
       var webview = this.getWebView(pageIndex)
       page.statusText = false
-      page.location = webview.getUrl()
+      page.location = webview.getURL()
       page.canGoBack = webview.canGoBack()
       page.canGoForward = webview.canGoForward()
       if (!page.title)
@@ -232,7 +232,8 @@ var BrowserChrome = React.createClass({
     onPageTitleSet: function (e) {
       var page = this.getPageObject()
       page.title = e.title
-      page.location = this.getWebView().getUrl()
+      var wv = this.getWebView()
+      page.location = wv.getURL()
       this.setState(this.state)
     },
     onContextMenu: function (e, page, pageIndex) {
