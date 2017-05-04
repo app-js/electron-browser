@@ -14,7 +14,10 @@ app.on('window-all-closed', function() {
 })
 
 app.on('ready', function () {
-  mainWindow = new BrowserWindow({ width: 1030, height: 720, frame: false })
+  var fr = true;
+  if (process.platform == 'darwin') fr = false;
+
+  mainWindow = new BrowserWindow({ width: 1030, height: 720, fr })
 
   var p = url.format({
             pathname: path.join(__dirname, 'browser.html'),
