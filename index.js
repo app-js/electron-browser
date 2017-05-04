@@ -17,7 +17,7 @@ app.on('ready', function () {
   var fr = true;
   if (process.platform == 'darwin') fr = false;
 
-  mainWindow = new BrowserWindow({ width: 1030, height: 720, fr })
+  mainWindow = new BrowserWindow({ width: 1030, height: 720, frame: fr })
 
   var p = url.format({
             pathname: path.join(__dirname, 'browser.html'),
